@@ -6,7 +6,7 @@
 /*   By: skarim <skarim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:38:49 by skarim            #+#    #+#             */
-/*   Updated: 2024/02/14 22:33:25 by skarim           ###   ########.fr       */
+/*   Updated: 2024/02/18 13:53:12 by skarim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_destroy_forks(t_data *data, int nbr)
 	i = 0;
 	while (i < nbr)
 	{
-		ft_mutex_handler(&(data->forks[i].fork_mutex), DESTROY);
+		ft_mutex_handler(&data->forks[i].fork_mutex, DESTROY);
 		i++;
 	}
 }
@@ -71,7 +71,6 @@ int	ft_init_mutex(t_data *data)
 	i = 0;
 	while (i < data->nbr_philos)
 	{
-		data->forks[i].fork_id = i + 1;
 		if (ft_mutex_handler(&(data->forks[i].fork_mutex), INIT) != 0)
 			return (free(data->forks), free(data->philos),
 				ft_destroy_forks(data, i), -1);
