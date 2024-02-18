@@ -6,7 +6,7 @@
 /*   By: skarim <skarim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:31:31 by skarim            #+#    #+#             */
-/*   Updated: 2024/02/15 21:43:03 by skarim           ###   ########.fr       */
+/*   Updated: 2024/02/18 15:45:03 by skarim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	main(int argc, char **argv)
 
 	if (ft_valid_input(argc, argv, &data) == -1)
 		return (ft_error_message("wrong arguments!"));
+	if (data.nbr_times_eat == 0)
+		return (0);
 	if (ft_init(&data) == -1)
 		return (ft_error_message("Data initialization fails"));
 	if (ft_start(&data) == -1)
