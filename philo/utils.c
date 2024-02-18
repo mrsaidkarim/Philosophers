@@ -6,7 +6,7 @@
 /*   By: skarim <skarim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 16:19:08 by skarim            #+#    #+#             */
-/*   Updated: 2024/02/09 11:41:15 by skarim           ###   ########.fr       */
+/*   Updated: 2024/02/18 15:50:49 by skarim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,12 @@ int	ft_error_message(char *str)
 {
 	write(1, str, ft_strlen(str));
 	return (1);
+}
+
+long	get_time(void)
+{
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
