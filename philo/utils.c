@@ -6,7 +6,7 @@
 /*   By: skarim <skarim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 16:19:08 by skarim            #+#    #+#             */
-/*   Updated: 2024/02/18 15:50:49 by skarim           ###   ########.fr       */
+/*   Updated: 2024/02/18 22:49:02 by skarim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-int	ft_skip_spaces(char *str)
+int	ft_skip_spaces(char *str, int *end)
 {
 	int	i;
 
@@ -33,6 +33,9 @@ int	ft_skip_spaces(char *str)
 		i++;
 	while (str[i] == '0' && i != ft_strlen(str) - 1)
 		i++;
+	*end = ft_strlen(str) - 1;
+	while (str[*end] == 32 || (str[*end] >= 9 && str[*end] <= 13))
+		(*end)--;
 	return (i);
 }
 
@@ -41,12 +44,13 @@ long int	ft_atoi(char *str)
 	long int	n;
 	int			i;
 	int			count;
+	int			end;
 
 	i = 0;
 	n = 0;
 	count = 0;
-	i = ft_skip_spaces(str);
-	while (str[i])
+	i = ft_skip_spaces(str, &end);
+	while (i < end + 1)
 	{
 		if (str[i] >= '0' && str[i] <= '9')
 		{
