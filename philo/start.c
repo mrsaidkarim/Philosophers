@@ -6,7 +6,7 @@
 /*   By: skarim <skarim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:51:14 by skarim            #+#    #+#             */
-/*   Updated: 2024/02/18 16:01:34 by skarim           ###   ########.fr       */
+/*   Updated: 2024/02/19 12:15:09 by skarim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,38 +21,39 @@ void	ft_must_eat(t_data *data)
 	i = 0;
 	while (i < data->nbr_philos)
 	{
-		if (data->philos[i].nbr_meals >= data->nbr_times_eat)
+		if (get_with_mutex(&(data->philos[i].philo_mtx),
+				&data->philos[i].nbr_meals) >= data->nbr_times_eat)
 			nbr++;
 		i++;
 	}
 	if (nbr == data->nbr_philos)
-		data->end = 1;
+		set_with_mutex(&(data->data_mtx), &data->end, 1);
 }
 
 void	monitor(t_data *data)
 {
 	int	i;
-	int	nbr;
 
-	while (!data->dead_flag)
+	while (!get_with_mutex(&data->data_mtx, &data->dead_flag))
 	{
-		i = 0;
-		nbr = 0;
-		while (i < data->nbr_philos && !data->dead_flag)
+		usleep(100);
+		i = -1;
+		while (++i < data->nbr_philos && !get_with_mutex(&data->data_mtx,
+				&data->dead_flag))
 		{
-			if ((get_time() - data->philos[i].last_eating) > data->time_die
-				&& !data->philos[i].is_eating)
+			if (!get_with_mutex(&(data->philos[i].philo_mtx),
+					&data->philos[i].is_eating) && (get_time()
+					- getlong_with_mutex(&(data->philos[i].philo_mtx),
+						&data->philos[i].last_eating)) > data->time_die)
 			{
 				ft_print(&data->philos[i], "died", 1);
-				data->dead_flag = 1;
-				break ;
+				set_with_mutex(&data->data_mtx, &data->dead_flag, 1);
 			}
-			i++;
 		}
 		if (data->nbr_times_eat != -1)
 		{
 			ft_must_eat(data);
-			if (data->end == 1)
+			if (get_with_mutex(&(data->data_mtx), &(data->end)) == 1)
 				break ;
 		}
 	}
