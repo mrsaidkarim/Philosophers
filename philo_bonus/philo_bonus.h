@@ -6,7 +6,7 @@
 /*   By: skarim <skarim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:46:16 by skarim            #+#    #+#             */
-/*   Updated: 2024/02/22 16:02:02 by skarim           ###   ########.fr       */
+/*   Updated: 2024/02/24 16:25:23 by skarim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_philo
 	int			nbr_meals;
 	long		last_eating;
 	int			is_eating;
-	// sem_t		*philo_sem;
+	int			done;
 	t_data		*data;
 }	t_philo;
 
@@ -42,13 +42,9 @@ typedef struct s_data
 	int		time_eat;
 	int		time_sleep;
 	int		nbr_times_eat;
-	int		end;
-	int		dead_flag;
 	long	start_time;
 	t_philo	*philos;
 	sem_t	*writing_sem;
-	sem_t	*end_sem;
-	sem_t	*dead_flag_sem;
 	sem_t	*fork_sem;
 }	t_data;
 
