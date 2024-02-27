@@ -1,6 +1,6 @@
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -fsanitize=thread -g
-SRC = utils.c init.c start.c philo.c
+CFLAGS = -Wall -Werror -Wextra
+SRC = utils.c init.c start.c philo_functions.c mutex_helper.c philo.c
 OBJ = ${SRC:.c=.o}
 HEADER = philo.h
 NAME = philo
